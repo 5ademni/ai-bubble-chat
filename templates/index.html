@@ -4,37 +4,46 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="../static/styles.css" />
   </head>
-  <script
-    type="module"
-    src="https://unpkg.com/deep-chat@1.4.11/dist/deepChat.bundle.js"
-  ></script>
   <body>
     <deep-chat
-      id="chat-element"
-      messageStyles='{"html": {"shared": {"bubble": {"backgroundColor": "unset"}}}}'
-      initialMessages='[{"html": "<button>User button</button>", "role": "user"}]'
+      request='{"url": "http://localhost:8080/chat", "method": "POST", "headers": {"Content-Type": "application/json"}}'
       style="height: 370px; border-radius: 8px"
     ></deep-chat>
-  </body>
-  <script type="module">
-    const elementRef = document.getElementById("chat-element");
+    <script
+      type="module"
+      src="https://unpkg.com/deep-chat@1.4.11/dist/deepChat.bundle.js"
+    ></script>
+    <script type="module">
+      const elementRef = document.querySelector("deep-chat");
 
-    elementRef.addEventListener("sendMessage", (event) => {
-      const message = event.detail.text;
-      fetch("/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          bot: "travel_assitance",
-          message: message,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          elementRef.addMessage({ role: "ai", text: data.response });
-        });
-    });
-  </script>
+      elementRef.addEventListener("sendMessage", (event) => {
+        const message = event.detail.text;
+        fetch("http://localhost:8080/chat", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            messages: [{ text: message }],
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data && data.response) {
+              elementRef.addMessage({ role: "ai", text: data.response });
+            } else {
+              console.log("Unexpected data:", data);
+            }
+          })
+          .catch((error) => {
+            console.error("Fetch error:", error);
+          });
+      });
+    </script>
+  </body>
 </html>

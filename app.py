@@ -56,7 +56,7 @@ def chat():
     for chunk in client.send_message(bot, message):
         pass
     print(chunk["text"])
-    return {"response": chunk["text"]}
+    return {"text": chunk["text"]}
 
 
 @app.route("/chat-stream", methods=["POST"])
