@@ -1,5 +1,5 @@
 from requests.exceptions import ConnectionError
-from flask import Flask, request, render_template, Response
+from flask import Flask, request, render_template, Response, stream_with_context
 from flask_cors import CORS
 from poe_api_wrapper import PoeApi
 import traceback
@@ -61,14 +61,21 @@ def chat():
 
 @app.route("/chat-stream", methods=["POST"])
 def chat_stream():
-    body = request.json
-    message = body.get('message')
+    messages = body.get('messages')
+    if messages is None or len(messages) == 0:
+        return {"error": "No message provided"}, 400
+    message = messages[0].get('text')
     print(f"Received message: {message}")  # print the received message
+    if message is None:
+        return {"error": "No message provided"}, 400
+    message = str(message)  # convert message to string
 
     def generate():
         for chunk in client.send_message(bot, message):
-            yield chunk["response"]
-    return Response(generate(), mimetype='text/plain')
+            print(chunk["response"], end="", flush=True)
+            yield chunk["response"] + "\n"
+
+    return Response(stream_with_context(generate()), mimetype='text/plain')
 
 
 if __name__ == "__main__":
