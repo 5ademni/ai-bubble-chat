@@ -10,7 +10,7 @@ import traceback
 
 app = Flask(__name__)
 client = PoeApi("CmpguqkTtuqLZh5w1XeRGw%3D%3D")
-bot = "travel_assitance"
+bot = "5ademni_bot"
 
 # this will need to be reconfigured before taking the app to production
 cors = CORS(app)
