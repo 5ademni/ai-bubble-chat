@@ -1,8 +1,13 @@
 from poe_api_wrapper import PoeApi
 
-client = PoeApi("CmpguqkTtuqLZh5w1XeRGw%3D%3D")
+tokens = {
+    'b': 'YVNKZKBGPbWgKMAW1Xn17g%3D%3D',
+    'lat': 'qf2oLEe0K1aw4G2NxfvwsaN9b9no9%2BsjrhlXsDWqHA%3D%3D'
+}
 
-bot = "travel_assitance"
+client = PoeApi(cookie=tokens)
+
+bot = "5ademni_bot"
 message = "say hi!"
 
 '''# streaming the response
