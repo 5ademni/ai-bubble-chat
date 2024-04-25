@@ -32,16 +32,10 @@ def home():
 # https://deepchat.dev/docs/connect/#Response
 
 
-'''@app.errorhandler(Exception)
+@app.errorhandler(Exception)
 def handle_exception(e):
     print(traceback.format_exc())
-    return {"error": str(e)}, 500'''
-
-
-@app.errorhandler(ConnectionError)
-def handle_exception(e):
-    print(e)
-    return {"error": "Internal service error"}, 500
+    return {"error": str(e)}, 500
 
 # ------------------ CUSTOM API ------------------
 

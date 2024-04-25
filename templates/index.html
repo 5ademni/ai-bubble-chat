@@ -6,7 +6,7 @@
   </head>
   <body>
     <deep-chat
-      request='{"url": "http://localhost:8080/chat", "method": "POST", "headers": {"Content-Type": "application/json"}}'
+      request='{"url": "http://localhost:7890/chat", "method": "POST", "headers": {"Content-Type": "application/json"}}'
       style="height: 370px; border-radius: 8px"
       speechToText='{"webSpeech": {"language": "en-US"}}'
       messageStyles='{
@@ -72,7 +72,7 @@
       }'
       textInput='{"placeholder": {"text": "Send a message"}}'
       initialMessages='[
-        {"text": "Greetings! How may I assist you today in finding the most affordable travel options?", "role": "ai"},
+        {"text": "Greetings! How may I assist you today in finding the most affordable travel options?", "role": "ai"}
       ]'
     ></deep-chat>
     <script
@@ -84,7 +84,7 @@
 
       elementRef.addEventListener("sendMessage", (event) => {
         const message = event.detail.text;
-        fetch("http://localhost:8080/chat", {
+        fetch("http://localhost:7890/chat", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
