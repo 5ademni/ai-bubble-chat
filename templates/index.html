@@ -7,7 +7,12 @@
   <body>
     <deep-chat
       request='{"url": "http://localhost:7890/chat", "method": "POST", "headers": {"Content-Type": "application/json"}}'
-      style="height: 370px; border-radius: 8px"
+      style="
+        border-radius: 10px;
+        width: 96vw;
+        height: calc(100vh - 70px);
+        padding-top: 10px;
+      "
       speechToText='{"webSpeech": {"language": "en-US"}}'
       messageStyles='{
         "default": {
@@ -26,7 +31,7 @@
       }'
       avatars='{
         "default": {"styles": {"position": "left"}},
-        "ai": {"src": "../static/chatbot2.png"}
+        "ai": {"src": "../static/chatbot_logo.jpg"}
       }'
       submitButtonStyles='{
         "submit": {

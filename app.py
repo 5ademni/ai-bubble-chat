@@ -51,10 +51,9 @@ def chat():
     if message is None:
         return {"error": "No message provided"}, 400
     message = str(message)  # convert message to string
-    chunks = []
     for chunk in client.send_message(bot, message):
         pass
-    print(chunk["text"])
+    # DEBUG print(chunk["text"])
     return {"text": chunk["text"]}
 
 
